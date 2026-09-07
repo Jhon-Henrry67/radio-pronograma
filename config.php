@@ -10,8 +10,6 @@ $dbname = getenv('DB_NAME') ?: 'radio_pronograma';
 $username = getenv('DB_USER') ?: 'root';
 $password = getenv('DB_PASS') ?? '';
 
-$caPath = __DIR__ . '/ca-certificate.crt';
-
 try {
     $dsn = "mysql:host=$host;port=4000;dbname=$dbname;charset=utf8mb4";
     $options = [
@@ -20,9 +18,8 @@ try {
         PDO::ATTR_EMULATE_PREPARES => false,
     ];
 
-    if ($host !== 'localhost' && file_exists($caPath)) {
-        $options[PDO::MYSQL_ATTR_SSL_CA] = $caPath;
-        $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
+    if ($host !== 'localhost') {
+        $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
     }
 
     $pdo = new PDO($dsn, $username, $password, $options);
