@@ -8,7 +8,7 @@ ini_set('log_errors', 1);
 $host = getenv('DB_HOST') ?: 'localhost';
 $dbname = getenv('DB_NAME') ?: 'radio_pronograma';
 $username = getenv('DB_USER') ?: 'root';
-$password = getenv('DB_PASS') : '';
+$password = getenv('DB_PASS') ?? '';
 
 try {
     $dsn = "mysql:host=$host;port=4000;dbname=$dbname;charset=utf8mb4";
