@@ -1,10 +1,12 @@
-const CACHE_NAME = 'radio-pronograma-v1';
+const CACHE_NAME = 'radio-v2';
 const urlsToCache = [
     '/',
     '/index.html',
     '/styles.css',
     '/script.js',
-    '/manifest.json'
+    '/manifest.json',
+    '/icon.php?size=192',
+    '/icon.php?size=512'
 ];
 
 self.addEventListener('install', event => {

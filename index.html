@@ -7,6 +7,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Radio">
+    <meta name="application-name" content="Radio Pronograma">
+    <meta name="description" content="Pronograma de horarios de radio">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar" content="#6366f1">
+    <meta name="msapplication-TileColor" content="#6366f1">
+    <meta name="msapplication-TileImage" content="icon.php?size=192">
+    <link rel="apple-touch-icon" sizes="192x192" href="icon.php?size=192">
+    <link rel="apple-touch-icon" sizes="512x512" href="icon.php?size=512">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Radio - Pronograma</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon.php?size=192">
@@ -173,14 +183,58 @@
         </main>
     </div>
 
+    <div id="install-banner" class="install-banner" style="display:none;">
+        <div class="install-content">
+            <span class="install-icon">📲</span>
+            <div class="install-text">
+                <strong>Instalar App</strong>
+                <small>Agrega Radio a tu pantalla de inicio</small>
+            </div>
+            <button id="install-btn" class="install-btn">Instalar</button>
+            <button id="install-close" class="install-close">✕</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/radio-pronograma/service-worker.js')
+                navigator.serviceWorker.register('/service-worker.js')
                     .catch(() => {});
             });
         }
+
+        let deferredPrompt;
+        const installBanner = document.getElementById('install-banner');
+        const installBtn = document.getElementById('install-btn');
+        const installClose = document.getElementById('install-close');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (!localStorage.getItem('installDismissed')) {
+                installBanner.style.display = 'block';
+            }
+        });
+
+        installBtn.addEventListener('click', () => {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choice) => {
+                if (choice.outcome === 'accepted') {
+                    installBanner.style.display = 'none';
+                }
+                deferredPrompt = null;
+            });
+        });
+
+        installClose.addEventListener('click', () => {
+            installBanner.style.display = 'none';
+            localStorage.setItem('installDismissed', '1');
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBanner.style.display = 'none';
+        });
     </script>
 </body>
 </html>

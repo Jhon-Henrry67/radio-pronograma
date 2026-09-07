@@ -244,3 +244,66 @@ body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); c
     .my-chip .shift-name { font-size: 1rem; }
     .my-chip .shift-time { font-size: 0.8rem; }
 }
+
+/* INSTALL BANNER */
+.install-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9998;
+    padding: 12px 16px;
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.install-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.install-icon { font-size: 1.8rem; }
+
+.install-text {
+    flex: 1;
+    color: white;
+}
+
+.install-text strong { display: block; font-size: 0.9rem; }
+.install-text small { color: #94a3b8; font-size: 0.75rem; }
+
+.install-btn {
+    padding: 8px 20px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.install-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+@media (max-width: 480px) {
+    .install-text small { display: none; }
+    .install-btn { padding: 8px 14px; font-size: 0.8rem; }
+}

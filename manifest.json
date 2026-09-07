@@ -1,9 +1,9 @@
 {
-    "name": "Radio Programa - Pronograma",
+    "name": "Radio Pronograma",
     "short_name": "Radio",
-    "description": "Pronograma de horarios para radio",
-    "start_url": "/radio-pronograma/",
-    "scope": "/radio-pronograma/",
+    "description": "Pronograma de horarios de radio",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#0f172a",
     "theme_color": "#6366f1",
