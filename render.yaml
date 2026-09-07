@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: radio-pronograma
+    runtime: docker
+    plan: free
+    healthCheckPath: /api.php?action=healthcheck
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASS
+        sync: false
