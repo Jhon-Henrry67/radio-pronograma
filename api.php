@@ -10,6 +10,10 @@ switch ($action) {
     case 'healthcheck':
         echo json_encode(['status' => 'ok']);
         exit;
+    case 'debug':
+        $stmt = $pdo->query("SELECT id, nombre, usuario, rol FROM usuarios");
+        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+        exit;
     case 'login':
         if ($method !== 'POST') { http_response_code(405); exit; }
         $data = json_decode(file_get_contents('php://input'), true);
