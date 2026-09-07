@@ -294,9 +294,7 @@ function renderPersonalShifts() {
     const empty = document.getElementById('empty-my-schedule');
     if (!container) return;
     
-    const myShifts = appState.schedule.filter(s => s.personal_nombre === appState.currentUser.nombre);
-    
-    if (myShifts.length === 0) {
+    if (appState.schedule.length === 0) {
         container.innerHTML = '';
         empty.style.display = 'block';
         return;
@@ -304,9 +302,10 @@ function renderPersonalShifts() {
     
     empty.style.display = 'none';
     
+    // Use ALL shifts for the grid (full schedule view)
     const timeSlots = [];
     const seen = new Set();
-    myShifts.forEach(s => {
+    appState.schedule.forEach(s => {
         const key = `${s.hora_inicio}-${s.hora_fin}`;
         if (!seen.has(key)) {
             seen.add(key);
@@ -315,6 +314,8 @@ function renderPersonalShifts() {
     });
     timeSlots.sort((a, b) => a.inicio - b.inicio);
     
+    const myName = appState.currentUser.nombre;
+    
     let html = '<div class="schedule-grid-container"><table class="schedule-grid"><thead><tr>';
     DAYS.forEach(d => { html += `<th>${DAY_LABELS[d]}</th>`; });
     html += '</tr></thead><tbody>';
@@ -322,14 +323,17 @@ function renderPersonalShifts() {
     timeSlots.forEach(slot => {
         html += '<tr>';
         DAYS.forEach(day => {
-            const shift = myShifts.find(s => 
+            const shift = appState.schedule.find(s => 
                 s.dia === day && parseInt(s.hora_inicio) === slot.inicio && parseInt(s.hora_fin) === slot.fin
             );
             if (shift) {
-                html += `<td class="my-cell">
-                    <div class="my-chip">
+                const isMine = shift.personal_nombre === myName;
+                const color = getColor(shift.personal_nombre);
+                html += `<td class="${isMine ? 'my-cell' : 'shift-cell'}">
+                    <div class="shift-chip" style="background:${color}20;${isMine ? 'border:2px solid ' + color + ';' : ''}">
+                        <span class="shift-avatar" style="background:${color};">${getInitials(shift.personal_nombre)}</span>
                         <div class="shift-text">
-                            <span class="shift-name">✓ Mi Turno</span>
+                            <span class="shift-name">${isMine ? '✓ ' : ''}${shift.personal_nombre}</span>
                             <span class="shift-time">${formatHour(slot.inicio)} - ${formatHour(slot.fin)}</span>
                         </div>
                     </div>
