@@ -19,6 +19,8 @@ try {
     ];
 
     if ($host !== 'localhost') {
+        $caPath = __DIR__ . '/ca-certificate.crt';
+        $options[PDO::MYSQL_ATTR_SSL_CA] = $caPath;
         $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
     }
 
