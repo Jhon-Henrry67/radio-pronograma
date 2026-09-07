@@ -2,7 +2,9 @@
 // PRONOGRAMA DE RADIO
 // ============================================
 
-const API_URL = '/api.php';
+const API_URL = (location.protocol === 'capacitor:' || location.hostname === 'localhost' && location.port === '')
+    ? 'https://radio-pronograma.onrender.com/api.php'
+    : '/api.php';
 const DAYS = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 const DAY_LABELS = { Lunes: 'Lunes', Martes: 'Martes', Miercoles: 'Miércoles', Jueves: 'Jueves', Viernes: 'Viernes' };
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316', '#06b6d4', '#84cc16'];

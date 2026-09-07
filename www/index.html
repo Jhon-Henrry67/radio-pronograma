@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Radio">
+    <meta name="application-name" content="Radio Pronograma">
+    <meta name="description" content="Pronograma de horarios de radio">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar" content="#6366f1">
+    <meta name="msapplication-TileColor" content="#6366f1">
+    <meta name="msapplication-TileImage" content="icon.php?size=192">
+    <link rel="apple-touch-icon" sizes="192x192" href="icon.php?size=192">
+    <link rel="apple-touch-icon" sizes="512x512" href="icon.php?size=512">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Radio - Pronograma</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.php?size=192">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- LOGIN -->
+    <div id="login-screen" class="screen active">
+        <div class="login-wrapper">
+            <div class="login-bg">
+                <div class="bg-shape shape-1"></div>
+                <div class="bg-shape shape-2"></div>
+            </div>
+            <div class="container">
+                <div class="logo">
+                    <div class="logo-icon">📻</div>
+                    <h1>Radio Programa</h1>
+                    <p>Pronograma de Horarios</p>
+                </div>
+                <div class="form-container glass">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="login">Entrar</button>
+                        <button class="tab-btn" data-tab="register">Registrarse</button>
+                    </div>
+                    
+                    <form id="login-form" class="form active">
+                        <div class="input-group">
+                            <label>Usuario</label>
+                            <input type="text" id="login-user" required placeholder="Tu usuario">
+                        </div>
+                        <div class="input-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="login-pass" required placeholder="Tu contraseña">
+                        </div>
+                        <button type="submit" class="btn-primary">Iniciar Sesión</button>
+                    </form>
+                    
+                    <form id="register-form" class="form">
+                        <div class="input-group">
+                            <label>Nombre completo</label>
+                            <input type="text" id="reg-name" required placeholder="Tu nombre">
+                        </div>
+                        <div class="input-group">
+                            <label>Usuario</label>
+                            <input type="text" id="reg-user" required placeholder="Elige un usuario">
+                        </div>
+                        <div class="input-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="reg-pass" required placeholder="Una contraseña">
+                        </div>
+                        <div class="input-group">
+                            <label>Rol</label>
+                            <select id="reg-role" required>
+                                <option value="personal">Personal</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">Crear Cuenta</button>
+                    </form>
+                    
+                    <p id="login-error" class="error"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="admin-panel" class="screen">
+        <header class="header">
+            <div class="header-left">
+                <div class="header-logo">📻</div>
+                <h1>Admin</h1>
+            </div>
+            <div class="header-actions">
+                <div class="user-badge"><span id="admin-name"></span></div>
+                <button id="logout-btn" class="btn-logout">Salir</button>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <!-- FORMULARIO -->
+            <section class="section glass-card">
+                <div class="section-header">
+                    <div class="section-icon">➕</div>
+                    <h2>Agregar Turno</h2>
+                </div>
+                
+                <form id="add-shift-form">
+                    <div class="input-group">
+                        <label>Nombre</label>
+                        <input type="text" id="shift-name" required placeholder="Nombre de la persona">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Día</label>
+                        <select id="shift-day" required>
+                            <option value="">Seleccionar día</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miercoles">Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Hora Inicio</label>
+                            <select id="shift-start" required></select>
+                        </div>
+                        <div class="input-group">
+                            <label>Hora Fin</label>
+                            <select id="shift-end" required></select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Guardar Turno</button>
+                </form>
+            </section>
+            
+            <!-- LISTA DE TURNOS -->
+            <section class="section glass-card">
+                <div class="section-header">
+                    <div class="section-icon purple">📋</div>
+                    <h2>Turnos de la Semana</h2>
+                </div>
+                
+                <div id="shifts-list"></div>
+                <div id="empty-schedule" class="empty-state">
+                    <p>No hay turnos guardados</p>
+                    <span>Agrega un turno usando el formulario</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PERSONAL -->
+    <div id="personal-panel" class="screen">
+        <header class="header">
+            <div class="header-left">
+                <div class="header-logo">📻</div>
+                <h1>Mi Horario</h1>
+            </div>
+            <div class="header-actions">
+                <div class="user-badge"><span id="personal-name"></span></div>
+                <button id="logout-btn-personal" class="btn-logout">Salir</button>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <section class="section glass-card">
+                <div class="section-header">
+                    <div class="section-icon blue">📅</div>
+                    <h2>Mis Turnos</h2>
+                </div>
+                <div id="my-shifts-list"></div>
+                <div id="empty-my-schedule" class="empty-state">
+                    <p>No tienes turnos asignados</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="install-banner" class="install-banner" style="display:none;">
+        <div class="install-content">
+            <span class="install-icon">📲</span>
+            <div class="install-text">
+                <strong>Instalar App</strong>
+                <small>Agrega Radio a tu pantalla de inicio</small>
+            </div>
+            <button id="install-btn" class="install-btn">Instalar</button>
+            <button id="install-close" class="install-close">✕</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .catch(() => {});
+            });
+        }
+
+        let deferredPrompt;
+        const installBanner = document.getElementById('install-banner');
+        const installBtn = document.getElementById('install-btn');
+        const installClose = document.getElementById('install-close');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (!localStorage.getItem('installDismissed')) {
+                installBanner.style.display = 'block';
+            }
+        });
+
+        installBtn.addEventListener('click', () => {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choice) => {
+                if (choice.outcome === 'accepted') {
+                    installBanner.style.display = 'none';
+                }
+                deferredPrompt = null;
+            });
+        });
+
+        installClose.addEventListener('click', () => {
+            installBanner.style.display = 'none';
+            localStorage.setItem('installDismissed', '1');
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBanner.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

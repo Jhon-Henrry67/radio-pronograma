@@ -1,0 +1,24 @@
+{
+  "appId": "com.radio.pronograma",
+  "appName": "Radio Pronograma",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "allowNavigation": ["radio-pronograma.onrender.com"]
+  },
+  "android": {
+    "allowMixedContent": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "backgroundColor": "#6366f1",
+      "showSpinner": true,
+      "spinnerColor": "#ffffff"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#6366f1"
+    }
+  }
+}
